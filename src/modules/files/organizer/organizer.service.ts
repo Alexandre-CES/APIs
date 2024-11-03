@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import { FileTypes } from './interfaces/file-types.interface';
-import { ReturnObject } from './interfaces/return-object';
+import { ReturnObject } from '../interfaces/return-object';
 
 export class OrganizerService{
 
-    async organize(reqFilePath: string): Promise<ReturnObject>{
-        if (!fs.existsSync(reqFilePath)) { 
+    async organize(reqDirPath: string): Promise<ReturnObject>{
+        if (!fs.existsSync(reqDirPath)) { 
             return {
                 status:400,
                 message:'Path not found'
@@ -14,7 +14,7 @@ export class OrganizerService{
           }
       
         try {
-            const data = await fs.promises.readdir(reqFilePath);
+            const data = await fs.promises.readdir(reqDirPath);
     
             // read file-types.json
             const jsonFilePath = path.join(process.cwd(), 'src/modules/files/organizer/data/file-types.json');
@@ -22,7 +22,7 @@ export class OrganizerService{
             const fileTypes: FileTypes = JSON.parse(jsonData.toString());
     
             for (const file of data) {
-                const filePath = path.join(reqFilePath, file);
+                const filePath = path.join(reqDirPath, file);
                 const stats = await fs.promises.stat(filePath);
     
                 // if isn't a directory
@@ -37,7 +37,7 @@ export class OrganizerService{
                         const fileExtensions: string[] = fileTypes[directory];
         
                         if (fileExtensions.includes(ext)) {
-                        const dirPath = path.join(reqFilePath, directory);
+                        const dirPath = path.join(reqDirPath, directory);
         
                         //create dirpath if doesn't exist 
                         if (!fs.existsSync(dirPath)) {
