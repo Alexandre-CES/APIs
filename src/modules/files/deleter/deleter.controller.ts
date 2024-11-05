@@ -9,4 +9,16 @@ export class DeleterController{
 
         res.status(result.status).send(result.message);
     };
+
+    public async deleteDirFilesFromAccessDate(req:Request, res:Response){
+        const result = await this.deleterService.deleteDirFilesFromAccessDate(req.body.dirPath, req.body.date);
+
+        res.status(result.status).send(result.message);
+    }
+
+    public async deleteDirFilesToAccessDate(req:Request, res:Response){
+        const result = await this.deleterService.deleteDirFilesToAccessDate(req.body.dirPath, req.body.date);
+
+        res.status(result.status).send(result.message);
+    }
 }

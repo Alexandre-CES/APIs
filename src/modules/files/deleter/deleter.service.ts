@@ -1,6 +1,7 @@
 import { ReturnObject } from "../interfaces/return-object";
-import fs from 'fs';
+import fs, { stat } from 'fs';
 import path from 'path';
+import { handleErrors } from "../helpers/files-error-handle";
 
 export class DeleterService{
 
@@ -9,7 +10,7 @@ export class DeleterService{
             return {
                 status:400,
                 message:'Path not found!'
-            }
+            };
         }
 
         try{
@@ -23,33 +24,76 @@ export class DeleterService{
             return {
                 status:200,
                 message: 'Directory cleared successfully'
-            }
+            };
+
         }catch(err){
-            if(err instanceof Error && 'code' in err){
-                const errorCode = (err as any).code;
-                switch (errorCode) { 
-                    case 'ENOENT': 
-                        return {
-                            status:404,
-                            message:'File or directory not found.'
-                        }
-                    case 'EACCES': 
-                        return {
-                            status:403,
-                            message:'Permission denied.'
-                        }
-                    default: 
-                        return {
-                            status:500,
-                            message:'Internal server error.'
-                        }
-                } 
-            }else{
-                return{
-                    status:500,
-                    message: 'Unknown error'
+            return handleErrors(err);
+        }
+    }
+
+    async deleteDirFilesFromAccessDate(reqDirPath:string, reqDate:Date): Promise<ReturnObject>{
+
+        if(!fs.existsSync(reqDirPath)){
+            return {
+                status: 400,
+                message: 'Path not found'
+            };
+        }
+
+        try{
+            const data = await fs.promises.readdir(reqDirPath);
+
+            for(const file of data){
+
+                const filePath = path.join(reqDirPath,file);
+                const stats = await fs.promises.stat(filePath);
+                const date = new Date(reqDate);
+
+                if(stats.atime > date){
+                    fs.promises.rm(filePath, {recursive:true});
                 }
             }
+
+            return {
+                status: 200,
+                message:'Successfully deleted files'
+            };
+
+        }catch(err){
+            return handleErrors(err);
+        }
+    }
+
+    async deleteDirFilesToAccessDate(reqDirPath:string, reqDate:Date): Promise<ReturnObject>{
+
+        if(!fs.existsSync(reqDirPath)){
+            return {
+                status: 400,
+                message: 'Path not found'
+            };
+        }
+
+        try{
+            const data = await fs.promises.readdir(reqDirPath);
+
+            for(const file of data){
+
+                const filePath = path.join(reqDirPath,file);
+                const stats = await fs.promises.stat(filePath);
+                const date = new Date(reqDate);
+
+                if(stats.atime <= date){
+                    fs.promises.rm(filePath, {recursive:true});
+                }
+            }
+
+            return {
+                status: 200,
+                message:'Successfully deleted files'
+            };
+
+        }catch(err){
+            return handleErrors(err);
         }
     }
 }
