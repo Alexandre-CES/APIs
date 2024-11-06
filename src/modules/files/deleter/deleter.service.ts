@@ -1,18 +1,12 @@
 import { ReturnObject } from "../interfaces/return-object";
-import fs, { stat } from 'fs';
+import fs from 'fs';
 import path from 'path';
-import { handleErrors } from "../helpers/files-error-handle";
+import { handleErrors } from "../helpers/handle-file-errors";
 
 export class DeleterService{
 
     async deleteAllDirFiles(reqDirPath:string): Promise<ReturnObject>{
-        if(!fs.existsSync(reqDirPath)){
-            return {
-                status:400,
-                message:'Path not found!'
-            };
-        }
-
+        
         try{
             const data = await fs.promises.readdir(reqDirPath);
 
@@ -31,14 +25,7 @@ export class DeleterService{
         }
     }
 
-    async deleteDirFilesFromAccessDate(reqDirPath:string, reqDate:Date): Promise<ReturnObject>{
-
-        if(!fs.existsSync(reqDirPath)){
-            return {
-                status: 400,
-                message: 'Path not found'
-            };
-        }
+    async deleteDirFilesFromAccessDate(reqDirPath:string, date:Date): Promise<ReturnObject>{
 
         try{
             const data = await fs.promises.readdir(reqDirPath);
@@ -47,7 +34,6 @@ export class DeleterService{
 
                 const filePath = path.join(reqDirPath,file);
                 const stats = await fs.promises.stat(filePath);
-                const date = new Date(reqDate);
 
                 if(stats.atime > date){
                     fs.promises.rm(filePath, {recursive:true});
@@ -56,7 +42,7 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Successfully deleted files'
+                message:'Files deleted successfully'
             };
 
         }catch(err){
@@ -64,14 +50,7 @@ export class DeleterService{
         }
     }
 
-    async deleteDirFilesToAccessDate(reqDirPath:string, reqDate:Date): Promise<ReturnObject>{
-
-        if(!fs.existsSync(reqDirPath)){
-            return {
-                status: 400,
-                message: 'Path not found'
-            };
-        }
+    async deleteDirFilesUpToAccessDate(reqDirPath:string, date:Date): Promise<ReturnObject>{
 
         try{
             const data = await fs.promises.readdir(reqDirPath);
@@ -80,7 +59,6 @@ export class DeleterService{
 
                 const filePath = path.join(reqDirPath,file);
                 const stats = await fs.promises.stat(filePath);
-                const date = new Date(reqDate);
 
                 if(stats.atime <= date){
                     fs.promises.rm(filePath, {recursive:true});
@@ -89,9 +67,21 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Successfully deleted files'
+                message:'Files deleted successfully'
             };
 
+        }catch(err){
+            return handleErrors(err);
+        }
+    }
+
+    async deleteDirFilesByExtensions(reqDirPath:string, reqExtensions:string[]): Promise<ReturnObject>{
+        try{
+
+            return {
+                status:200,
+                message:'Files deleted successfully'
+            };
         }catch(err){
             return handleErrors(err);
         }

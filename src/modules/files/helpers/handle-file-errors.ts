@@ -31,3 +31,18 @@ export function handleErrors(err:unknown): ReturnObject{
         }
     }
 }
+
+interface ParsedDateResult{
+    isValid: boolean;
+    date: Date;
+}
+
+export function parseReqBodyDate(reqDate:string): ParsedDateResult{
+    const date = new Date(reqDate);
+    const isValid = !isNaN(date.getTime());
+
+    return{
+        isValid,
+        date: date
+    }
+}

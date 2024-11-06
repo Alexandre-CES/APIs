@@ -14,8 +14,8 @@ router.post('/fromAccessDate',
     asyncHandler((req:Request, res:Response)=> deleterController.deleteDirFilesFromAccessDate(req,res))
 );
 
-router.post('/toAccessDate',
-    asyncHandler((req:Request, res:Response)=> deleterController.deleteDirFilesToAccessDate(req,res))
+router.post('/upToAccessDate',
+    asyncHandler((req:Request, res:Response)=> deleterController.deleteDirFilesUpToAccessDate(req,res))
 );
 
 export default router;
