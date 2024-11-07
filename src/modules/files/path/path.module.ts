@@ -15,4 +15,4 @@ router.get('/get',
     (req:Request,res:Response) => pathController.getDirPath(req,res)
 );
 
-export {router as pathRouter};
+export {router as pathRouter, pathService};

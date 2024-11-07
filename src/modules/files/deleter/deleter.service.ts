@@ -25,14 +25,14 @@ export class DeleterService{
         }
     }
 
-    async deleteDirFilesFromAccessDate(reqDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteDirFilesFromAccessDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
 
         try{
-            const data = await fs.promises.readdir(reqDirPath);
+            const data = await fs.promises.readdir(baseDirPath);
 
             for(const file of data){
 
-                const filePath = path.join(reqDirPath,file);
+                const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
 
                 if(stats.atime > date){
@@ -50,14 +50,14 @@ export class DeleterService{
         }
     }
 
-    async deleteDirFilesUpToAccessDate(reqDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteDirFilesUpToAccessDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
 
         try{
-            const data = await fs.promises.readdir(reqDirPath);
+            const data = await fs.promises.readdir(baseDirPath);
 
             for(const file of data){
 
-                const filePath = path.join(reqDirPath,file);
+                const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
 
                 if(stats.atime <= date){
@@ -75,7 +75,7 @@ export class DeleterService{
         }
     }
 
-    async deleteDirFilesByExtensions(reqDirPath:string, reqExtensions:string[]): Promise<ReturnObject>{
+    async deleteDirFilesByExtensions(baseDirPath:string, reqExtensions:string[]): Promise<ReturnObject>{
         try{
 
             return {

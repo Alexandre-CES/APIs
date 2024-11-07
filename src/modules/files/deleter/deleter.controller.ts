@@ -1,19 +1,26 @@
 import { DeleterService } from "./deleter.service";
+import { PathService } from "../path/path.service";
 import { Request, Response } from "express";
 import { parseReqBodyDate } from "../helpers/handle-file-errors";
 
 export class DeleterController{
-    constructor(private readonly deleterService: DeleterService){}
+    constructor(
+        private readonly deleterService: DeleterService,
+        private readonly pathService: PathService
+    ){}
 
     public async deleteAllDirFiles(req:Request, res:Response){
-        const result = await this.deleterService.deleteAllDirFiles(req.body.dirPath);
+        const result = await this.deleterService.deleteAllDirFiles(this.pathService.getDirPath());
         res.status(result.status).send(result.message);
     };
 
     public async deleteDirFilesFromAccessDate(req:Request, res:Response){
         const validDate = parseReqBodyDate(req.body.date);
         if(validDate.isValid){
-            const result = await this.deleterService.deleteDirFilesFromAccessDate(req.body.dirPath, validDate.date);
+            const result = await this.deleterService.deleteDirFilesFromAccessDate(
+                this.pathService.getDirPath(),
+                validDate.date
+            );
             res.status(result.status).send(result.message);
         }else{
             res.status(403).send('Invalid date');
@@ -23,7 +30,10 @@ export class DeleterController{
     public async deleteDirFilesUpToAccessDate(req:Request, res:Response){
         const validDate = parseReqBodyDate(req.body.date);
         if(validDate.isValid){
-            const result = await this.deleterService.deleteDirFilesUpToAccessDate(req.body.dirPath, validDate.date);
+            const result = await this.deleterService.deleteDirFilesUpToAccessDate(
+                this.pathService.getDirPath(),
+                validDate.date
+            );
             res.status(result.status).send(result.message);
         }else{
             res.status(403).send('Invalid date');

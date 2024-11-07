@@ -1,13 +1,17 @@
 import { Router } from "express";
+import { Request, Response } from "express";
+import { asyncHandler } from "../../../middlewares/asyncHandler";
 import { DeleterController } from "./deleter.controller";
 import { DeleterService } from "./deleter.service";
-import { asyncHandler } from "../../../middlewares/asyncHandler";
-import { Request, Response } from "express";
+import { pathService } from "../path/path.module";
 
 const router = Router();
-const deleterController = new DeleterController(new DeleterService());
+const deleterController = new DeleterController(
+    new DeleterService(),
+    pathService
+);
 
-router.post('/all',
+router.get('/all',
     asyncHandler((req:Request,res:Response)=> deleterController.deleteAllDirFiles(req,res))
 );
 router.post('/fromAccessDate',
