@@ -1,7 +1,7 @@
 import { ReturnObject } from "../interfaces/return-object";
 import fs from 'fs';
 import path from 'path';
-import { handleErrors } from "../helpers/handle-file-errors";
+import { handleFileErrors } from "../helpers/handle-file-errors";
 
 export class DeleterService{
 
@@ -21,7 +21,7 @@ export class DeleterService{
             };
 
         }catch(err){
-            return handleErrors(err);
+            return handleFileErrors(err);
         }
     }
 
@@ -46,7 +46,7 @@ export class DeleterService{
             };
 
         }catch(err){
-            return handleErrors(err);
+            return handleFileErrors(err);
         }
     }
 
@@ -71,7 +71,7 @@ export class DeleterService{
             };
 
         }catch(err){
-            return handleErrors(err);
+            return handleFileErrors(err);
         }
     }
 
@@ -83,7 +83,7 @@ export class DeleterService{
                 message:'Files deleted successfully'
             };
         }catch(err){
-            return handleErrors(err);
+            return handleFileErrors(err);
         }
     }
 }
