@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path'
 import { ReturnObject } from '../interfaces/return-object';
 
 export class PathService{
@@ -15,7 +16,7 @@ export class PathService{
                 message: 'Path not found'
             };
         }else{
-            this.dirPath = basePath;
+            this.dirPath = path.resolve(basePath);
             return{
                 status:200,
                 message:'success'
