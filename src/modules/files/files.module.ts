@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import pathRouter from './path/path.module';
+import { pathRouter } from './path/path.module';
 import organizerRouter from './organizer/organizer.module';
 
 const router = Router();
