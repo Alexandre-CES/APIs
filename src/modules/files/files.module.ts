@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import organizerRouter from './organizer/organizer.module';
+import pathRouter from './path/path.module';
 
 const router = Router();
 
-router.use('/organizer', organizerRouter);
+router.use('/path', pathRouter);
 
 export default router;
