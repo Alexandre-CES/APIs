@@ -7,7 +7,7 @@ import { handleFileErrors } from '../helpers/handle-file-errors';
 export class OrganizerService{
 
     async organize(baseDirPath: string): Promise<ReturnObject>{
-            
+
         try {
             
             const data = await fs.promises.readdir(baseDirPath);
