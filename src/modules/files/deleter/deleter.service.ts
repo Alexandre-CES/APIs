@@ -5,13 +5,13 @@ import { handleFileErrors } from "../helpers/handle-file-errors";
 
 export class DeleterService{
 
-    async deleteAllDirFiles(reqDirPath:string): Promise<ReturnObject>{
+    async deleteAllDirFiles(baseDirPath:string): Promise<ReturnObject>{
         
         try{
-            const data = await fs.promises.readdir(reqDirPath);
+            const data = await fs.promises.readdir(baseDirPath);
 
             for(const file of data){
-                const filePath = path.join(reqDirPath,file);
+                const filePath = path.join(baseDirPath,file);
                 fs.promises.rm(filePath, {recursive:true});
             }
 
@@ -77,6 +77,18 @@ export class DeleterService{
 
     async deleteDirFilesByExtensions(baseDirPath:string, reqExtensions:string[]): Promise<ReturnObject>{
         try{
+
+            const data = await fs.promises.readdir(baseDirPath);
+
+            for(const file of data){
+                const ext = path.extname(file).toLowerCase();
+
+                if(reqExtensions.includes(ext)){
+                    const filePath = path.join(baseDirPath, file);
+                    await fs.promises.unlink(filePath);
+                }
+
+            }
 
             return {
                 status:200,

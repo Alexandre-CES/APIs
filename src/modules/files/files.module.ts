@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { pathRouter } from './path/path.module';
-import deleterRouter from './deleter/deleter.module';
+import { deleterRouter } from './deleter/deleter.module';
 
 const router = Router();
 

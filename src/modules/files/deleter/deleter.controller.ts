@@ -38,6 +38,14 @@ export class DeleterController{
         }else{
             res.status(403).send('Invalid date');
         }
-        
+    }
+
+    public async deleteDirFilesByExtensions(req:Request, res:Response){
+        const result = await this.deleterService.deleteDirFilesByExtensions(
+            this.pathService.getDirPath(),
+            req.body.extensionList
+        );
+
+        res.status(result.status).send(result.message);
     }
 }
