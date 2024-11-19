@@ -46,3 +46,11 @@ export function parseReqBodyDate(reqDate:string): ParsedDateResult{
         date: date
     }
 }
+
+export function verifyReqBodyExtensionList(extensionList: string[]): boolean{
+    if(extensionList instanceof Array){
+        return true;
+    }else{
+        return false;
+    }
+}

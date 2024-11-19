@@ -1,7 +1,7 @@
 import { DeleterService } from "./deleter.service";
 import { PathService } from "../path/path.service";
 import { Request, Response } from "express";
-import { parseReqBodyDate } from "../helpers/handle-file-errors";
+import { parseReqBodyDate, verifyReqBodyExtensionList } from "../helpers/handle-file-errors";
 
 export class DeleterController{
     constructor(
@@ -41,11 +41,14 @@ export class DeleterController{
     }
 
     public async deleteDirFilesByExtensions(req:Request, res:Response){
-        const result = await this.deleterService.deleteDirFilesByExtensions(
-            this.pathService.getDirPath(),
-            req.body.extensionList
-        );
-
-        res.status(result.status).send(result.message);
+        if(verifyReqBodyExtensionList(req.body.extensionList)){
+            const result = await this.deleterService.deleteDirFilesByExtensions(
+                this.pathService.getDirPath(),
+                req.body.extensionList
+            );
+            res.status(result.status).send(result.message);
+        }else{
+            res.status(403).send('Extension list must be array!');
+        }
     }
 }
