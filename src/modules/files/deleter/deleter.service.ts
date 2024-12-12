@@ -30,7 +30,7 @@ export class DeleterService{
     }
 
     //Delete all files whose last access date is after the date in the request body
-    async deleteDirFilesFromAccessDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesLastAccessedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
 
         try{
             //read directory
@@ -60,7 +60,7 @@ export class DeleterService{
     }
 
     //Delete all files whose last access date is before the date in the request body
-    async deleteDirFilesUpToAccessDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesLastAccessedBeforeOrOnDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
 
         try{
 

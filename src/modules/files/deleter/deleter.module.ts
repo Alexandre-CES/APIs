@@ -14,12 +14,12 @@ const deleterController = new DeleterController(
 router.get('/all',
     asyncHandler((req:Request,res:Response) => deleterController.deleteAllDirFiles(req,res))
 );
-router.post('/fromAccessDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteDirFilesFromAccessDate(req,res))
+router.post('/lastAccessedAfterDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesLastAccessedAfterDate(req,res))
 );
 
-router.post('/upToAccessDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteDirFilesUpToAccessDate(req,res))
+router.post('/lastAccessedBeforeOrOnDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesLastAccessedBeforeOrOnDate(req,res))
 );
 
 router.post('/extensions',
