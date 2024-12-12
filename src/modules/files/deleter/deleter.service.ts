@@ -43,7 +43,7 @@ export class DeleterService{
                 const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
 
-                //delete file if access date is after date of request body 
+                //delete file if access date is after date
                 if(stats.atime > date){
                     fs.promises.rm(filePath, {recursive:true});
                 }
@@ -74,8 +74,68 @@ export class DeleterService{
                 const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
 
-                 //delete file if access date is before date of request body 
+                 //delete file if access date is before date
                 if(stats.atime <= date){
+                    fs.promises.rm(filePath, {recursive:true});
+                }
+            }
+
+            return {
+                status: 200,
+                message:'Files deleted successfully'
+            };
+
+        }catch(err){
+            return handleFileErrors(err);
+        }
+    }
+
+    //Delete all files whose creation date is after date of request body 
+    async deleteFilesCreatedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+        try{
+
+            //read directory
+            const data = await fs.promises.readdir(baseDirPath);
+
+            //iterate each file from directory
+            for(const file of data){
+
+                //catch stats of file
+                const filePath = path.join(baseDirPath,file);
+                const stats = await fs.promises.stat(filePath);
+
+                 //delete file if its creation date is after date 
+                if(stats.ctime > date){
+                    fs.promises.rm(filePath, {recursive:true});
+                }
+            }
+
+            return {
+                status: 200,
+                message:'Files deleted successfully'
+            };
+
+        }catch(err){
+            return handleFileErrors(err);
+        }
+    }
+
+    //Delete all files whose creation date is before or on date of request body 
+    async deleteFilesCreatedBeforeOrOnDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+        try{
+
+            //read directory
+            const data = await fs.promises.readdir(baseDirPath);
+
+            //iterate each file from directory
+            for(const file of data){
+
+                //catch stats of file
+                const filePath = path.join(baseDirPath,file);
+                const stats = await fs.promises.stat(filePath);
+
+                 //delete file if its creation date is before or on date
+                if(stats.ctime <= date){
                     fs.promises.rm(filePath, {recursive:true});
                 }
             }
@@ -109,7 +169,6 @@ export class DeleterService{
                     const filePath = path.join(baseDirPath, file);
                     await fs.promises.unlink(filePath);
                 }
-
             }
 
             return {
