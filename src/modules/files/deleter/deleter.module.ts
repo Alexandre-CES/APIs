@@ -18,16 +18,16 @@ router.post('/lastAccessedAfterDate',
     asyncHandler((req:Request, res:Response) => deleterController.deleteFilesLastAccessedAfterDate(req,res))
 );
 
-router.post('/lastAccessedBeforeOrOnDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesLastAccessedBeforeOrOnDate(req,res))
+router.post('/lastAccessedBeforeDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesLastAccessedBeforeDate(req,res))
 );
 
 router.post('/createdAfterDate',
     asyncHandler((req:Request, res:Response) => deleterController.deleteFilesCreatedAfterDate(req,res))
 )
 
-router.post('/createdBeforeOrOnDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesCreatedBeforeOrOnDate(req,res))
+router.post('/createdBeforeDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesCreatedBeforeDate(req,res))
 )
 
 router.post('/extensions',

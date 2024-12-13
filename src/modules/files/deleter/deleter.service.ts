@@ -60,7 +60,7 @@ export class DeleterService{
     }
 
     //Delete all files whose last access date is before the date in the request body
-    async deleteFilesLastAccessedBeforeOrOnDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesLastAccessedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
 
         try{
 
@@ -75,7 +75,7 @@ export class DeleterService{
                 const stats = await fs.promises.stat(filePath);
 
                  //delete file if access date is before date
-                if(stats.atime <= date){
+                if(stats.atime < date){
                     fs.promises.rm(filePath, {recursive:true});
                 }
             }
@@ -120,10 +120,10 @@ export class DeleterService{
         }
     }
 
-    //Delete all files whose creation date is before or on date of request body 
-    async deleteFilesCreatedBeforeOrOnDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    //Delete all files whose creation date is before date of request body 
+    async deleteFilesCreatedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+        
         try{
-
             //read directory
             const data = await fs.promises.readdir(baseDirPath);
 
@@ -134,8 +134,9 @@ export class DeleterService{
                 const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
 
-                 //delete file if its creation date is before or on date
-                if(stats.ctime <= date){
+                //delete file if its creation date is before date
+                console.log(stats.ctime)
+                if(stats.ctime < date){
                     fs.promises.rm(filePath, {recursive:true});
                 }
             }

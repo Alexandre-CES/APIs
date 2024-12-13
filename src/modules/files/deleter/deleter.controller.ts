@@ -27,10 +27,10 @@ export class DeleterController{
         }
     }
 
-    public async deleteFilesLastAccessedBeforeOrOnDate(req:Request, res:Response){
+    public async deleteFilesLastAccessedBeforeDate(req:Request, res:Response){
         const validDate = parseReqBodyDate(req.body.date);
         if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesLastAccessedBeforeOrOnDate(
+            const result = await this.deleterService.deleteFilesLastAccessedBeforeDate(
                 this.pathService.getDirPath(),
                 validDate.date
             );
@@ -53,10 +53,10 @@ export class DeleterController{
         }
     }
 
-    public async deleteFilesCreatedBeforeOrOnDate(req:Request, res:Response){
+    public async deleteFilesCreatedBeforeDate(req:Request, res:Response){
         const validDate = parseReqBodyDate(req.body.date);
         if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesCreatedBeforeOrOnDate(
+            const result = await this.deleterService.deleteFilesCreatedBeforeDate(
                 this.pathService.getDirPath(),
                 validDate.date
             );
