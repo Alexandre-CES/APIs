@@ -151,6 +151,66 @@ export class DeleterService{
         }
     }
 
+    //Delete all files whose motification date is after date of request body 
+    async deleteFilesModifiedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+        try{
+
+            //read directory
+            const data = await fs.promises.readdir(baseDirPath);
+
+            //iterate each file from directory
+            for(const file of data){
+
+                //catch stats of file
+                const filePath = path.join(baseDirPath,file);
+                const stats = await fs.promises.stat(filePath);
+
+                 //delete file if its motification date is after date 
+                if(stats.mtime > date){
+                    fs.promises.rm(filePath, {recursive:true});
+                }
+            }
+
+            return {
+                status: 200,
+                message:'Files deleted successfully'
+            };
+
+        }catch(err){
+            return handleFileErrors(err);
+        }
+    }
+
+    //Delete all files whose modification date is before date of request body 
+    async deleteFilesModifiedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+        
+        try{
+            //read directory
+            const data = await fs.promises.readdir(baseDirPath);
+
+            //iterate each file from directory
+            for(const file of data){
+
+                //catch stats of file
+                const filePath = path.join(baseDirPath,file);
+                const stats = await fs.promises.stat(filePath);
+
+                //delete file if its modification date is before date
+                if(stats.mtime < date){
+                    fs.promises.rm(filePath, {recursive:true});
+                }
+            }
+
+            return {
+                status: 200,
+                message:'Files deleted successfully'
+            };
+
+        }catch(err){
+            return handleFileErrors(err);
+        }
+    }
+
     //delete all files whose extension is in extension list 
     async deleteDirFilesByExtensions(baseDirPath:string, reqExtensions:string[]): Promise<ReturnObject>{
 

@@ -30,6 +30,14 @@ router.post('/createdBeforeDate',
     asyncHandler((req:Request, res:Response) => deleterController.deleteFilesCreatedBeforeDate(req,res))
 )
 
+router.post('/modifiedAfterDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesModifiedAfterDate(req,res))
+)
+
+router.post('/modifiedBeforeDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesModifiedBeforeDate(req,res))
+)
+
 router.post('/extensions',
     asyncHandler((req:Request,res:Response) => deleterController.deleteDirFilesByExtensions(req,res))
 );

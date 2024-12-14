@@ -66,6 +66,32 @@ export class DeleterController{
         }
     }
 
+    public async deleteFilesModifiedAfterDate(req:Request, res:Response){
+        const validDate = parseReqBodyDate(req.body.date);
+        if(validDate.isValid){
+            const result = await this.deleterService.deleteFilesModifiedAfterDate(
+                this.pathService.getDirPath(),
+                validDate.date
+            );
+            res.status(result.status).send(result.message);
+        }else{
+            res.status(403).send('Invalid date'); 
+        }
+    }
+
+    public async deleteFilesModifiedBeforeDate(req:Request, res:Response){
+        const validDate = parseReqBodyDate(req.body.date);
+        if(validDate.isValid){
+            const result = await this.deleterService.deleteFilesModifiedBeforeDate(
+                this.pathService.getDirPath(),
+                validDate.date
+            );
+            res.status(result.status).send(result.message);
+        }else{
+            res.status(403).send('Invalid date'); 
+        }
+    }
+
     public async deleteDirFilesByExtensions(req:Request, res:Response){
         if(verifyReqBodyExtensionList(req.body.extensionList)){
             const result = await this.deleterService.deleteDirFilesByExtensions(
