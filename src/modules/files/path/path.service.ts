@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path'
-import { ReturnObject } from '../interfaces/return-object';
+import { SimpleReturnObject } from '../interfaces/return-object';
 
 //store path of directory that the API should run in 
 export class PathService{
@@ -12,19 +12,19 @@ export class PathService{
     }
 
     //set directory
-    setDirPath(basePath:string):ReturnObject{
+    setDirPath(basePath:string):SimpleReturnObject{
 
         //check if directory exist
         if(!fs.existsSync(basePath)){
             return {
                 status:404,
-                message: 'Path not found'
+                body: 'Path not found'
             };
         }else{
             this.dirPath = path.resolve(basePath);
             return{
                 status:200,
-                message:'success'
+                body:'success'
             };
         }
     }

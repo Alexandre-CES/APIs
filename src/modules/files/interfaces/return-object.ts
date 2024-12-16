@@ -1,7 +1,7 @@
 /*return object of files module
     Must return a status code and message*/
 
-export interface ReturnObject{
+export interface SimpleReturnObject{
     status: number;
-    message: string;
+    body: string;
 }

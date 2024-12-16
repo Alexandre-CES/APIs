@@ -11,7 +11,7 @@ export class DeleterController{
 
     public async deleteAllDirFiles(req:Request, res:Response){
         const result = await this.deleterService.deleteAllDirFiles(this.pathService.getDirPath());
-        res.status(result.status).send(result.message);
+        res.status(result.status).send(result.body);
     };
 
     public async deleteFilesLastAccessedAfterDate(req:Request, res:Response){
@@ -21,7 +21,7 @@ export class DeleterController{
                 this.pathService.getDirPath(),
                 validDate.date
             );
-            res.status(result.status).send(result.message);
+            res.status(result.status).send(result.body);
         }else{
             res.status(403).send('Invalid date');
         }
@@ -34,7 +34,7 @@ export class DeleterController{
                 this.pathService.getDirPath(),
                 validDate.date
             );
-            res.status(result.status).send(result.message);
+            res.status(result.status).send(result.body);
         }else{
             res.status(403).send('Invalid date');
         }
@@ -47,7 +47,7 @@ export class DeleterController{
                 this.pathService.getDirPath(),
                 validDate.date
             );
-            res.status(result.status).send(result.message);
+            res.status(result.status).send(result.body);
         }else{
             res.status(403).send('Invalid date'); 
         }
@@ -60,7 +60,7 @@ export class DeleterController{
                 this.pathService.getDirPath(),
                 validDate.date
             );
-            res.status(result.status).send(result.message);
+            res.status(result.status).send(result.body);
         }else{
             res.status(403).send('Invalid date'); 
         }
@@ -73,7 +73,7 @@ export class DeleterController{
                 this.pathService.getDirPath(),
                 validDate.date
             );
-            res.status(result.status).send(result.message);
+            res.status(result.status).send(result.body);
         }else{
             res.status(403).send('Invalid date'); 
         }
@@ -86,7 +86,7 @@ export class DeleterController{
                 this.pathService.getDirPath(),
                 validDate.date
             );
-            res.status(result.status).send(result.message);
+            res.status(result.status).send(result.body);
         }else{
             res.status(403).send('Invalid date'); 
         }
@@ -98,7 +98,7 @@ export class DeleterController{
                 this.pathService.getDirPath(),
                 req.body.extensionList
             );
-            res.status(result.status).send(result.message);
+            res.status(result.status).send(result.body);
         }else{
             res.status(403).send('Extension list must be array!');
         }
