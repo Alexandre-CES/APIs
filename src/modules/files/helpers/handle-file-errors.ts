@@ -1,4 +1,4 @@
-import { ReturnObject } from "../interfaces/return-object";
+import { SimpleReturnObject } from "../interfaces/return-object";
 
 //make status code optional 
 interface CustomError extends Error { 
@@ -6,30 +6,30 @@ interface CustomError extends Error {
 }
 
 //Return status code and message of error
-export function handleFileErrors(err:unknown): ReturnObject{
+export function handleFileErrors(err:unknown): SimpleReturnObject{
     if(err instanceof Error && 'code' in err){
         const errorCode = (err as CustomError).code;
         switch (errorCode) { 
             case 'ENOENT': 
                 return {
                     status:404,
-                    message:'File or directory not found.'
+                    body:'File or directory not found.'
                 }
             case 'EACCES': 
                 return {
                     status:403,
-                    message:'Permission denied.'
+                    body:'Permission denied.'
                 }
             default: 
                 return {
                     status:500,
-                    message:'Internal server error.'
+                    body:'Internal server error.'
                 }
         } 
     }else{
         return{
             status:500,
-            message: 'Unknown error'
+            body: 'Unknown error'
         }
     }
 }

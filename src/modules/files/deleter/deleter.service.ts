@@ -1,4 +1,4 @@
-import { ReturnObject } from "../interfaces/return-object";
+import { SimpleReturnObject } from "../interfaces/return-object";
 import fs from 'fs';
 import path from 'path';
 import { handleFileErrors } from "../helpers/handle-file-errors";
@@ -7,7 +7,7 @@ import { handleFileErrors } from "../helpers/handle-file-errors";
 export class DeleterService{
 
     //delete all files of the directory
-    async deleteAllDirFiles(baseDirPath:string): Promise<ReturnObject>{
+    async deleteAllDirFiles(baseDirPath:string): Promise<SimpleReturnObject>{
         
         try{
             //read directory
@@ -21,7 +21,7 @@ export class DeleterService{
 
             return {
                 status:200,
-                message: 'Directory cleared successfully'
+                body: 'Directory cleared successfully'
             };
 
         }catch(err){
@@ -30,7 +30,7 @@ export class DeleterService{
     }
 
     //Delete all files whose last access date is after the date in the request body
-    async deleteFilesLastAccessedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesLastAccessedAfterDate(baseDirPath:string, date:Date): Promise<SimpleReturnObject>{
 
         try{
             //read directory
@@ -51,7 +51,7 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Files deleted successfully'
+                body:'Files deleted successfully'
             };
 
         }catch(err){
@@ -60,7 +60,7 @@ export class DeleterService{
     }
 
     //Delete all files whose last access date is before the date in the request body
-    async deleteFilesLastAccessedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesLastAccessedBeforeDate(baseDirPath:string, date:Date): Promise<SimpleReturnObject>{
 
         try{
 
@@ -82,7 +82,7 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Files deleted successfully'
+                body:'Files deleted successfully'
             };
 
         }catch(err){
@@ -91,7 +91,7 @@ export class DeleterService{
     }
 
     //Delete all files whose creation date is after date of request body 
-    async deleteFilesCreatedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesCreatedAfterDate(baseDirPath:string, date:Date): Promise<SimpleReturnObject>{
         try{
 
             //read directory
@@ -112,7 +112,7 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Files deleted successfully'
+                body:'Files deleted successfully'
             };
 
         }catch(err){
@@ -121,7 +121,7 @@ export class DeleterService{
     }
 
     //Delete all files whose creation date is before date of request body 
-    async deleteFilesCreatedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesCreatedBeforeDate(baseDirPath:string, date:Date): Promise<SimpleReturnObject>{
         
         try{
             //read directory
@@ -143,7 +143,7 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Files deleted successfully'
+                body:'Files deleted successfully'
             };
 
         }catch(err){
@@ -152,7 +152,7 @@ export class DeleterService{
     }
 
     //Delete all files whose motification date is after date of request body 
-    async deleteFilesModifiedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesModifiedAfterDate(baseDirPath:string, date:Date): Promise<SimpleReturnObject>{
         try{
 
             //read directory
@@ -173,7 +173,7 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Files deleted successfully'
+                body:'Files deleted successfully'
             };
 
         }catch(err){
@@ -182,7 +182,7 @@ export class DeleterService{
     }
 
     //Delete all files whose modification date is before date of request body 
-    async deleteFilesModifiedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    async deleteFilesModifiedBeforeDate(baseDirPath:string, date:Date): Promise<SimpleReturnObject>{
         
         try{
             //read directory
@@ -203,7 +203,7 @@ export class DeleterService{
 
             return {
                 status: 200,
-                message:'Files deleted successfully'
+                body:'Files deleted successfully'
             };
 
         }catch(err){
@@ -212,7 +212,7 @@ export class DeleterService{
     }
 
     //delete all files whose extension is in extension list 
-    async deleteDirFilesByExtensions(baseDirPath:string, reqExtensions:string[]): Promise<ReturnObject>{
+    async deleteDirFilesByExtensions(baseDirPath:string, reqExtensions:string[]): Promise<SimpleReturnObject>{
 
         try{
 
@@ -234,7 +234,7 @@ export class DeleterService{
 
             return {
                 status:200,
-                message:'Files deleted successfully'
+                body:'Files deleted successfully'
             };
         }catch(err){
             return handleFileErrors(err);

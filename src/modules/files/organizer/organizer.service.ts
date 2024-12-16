@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import { FileTypes } from './interfaces/file-types.interface';
-import { ReturnObject } from '../interfaces/return-object';
+import { SimpleReturnObject } from '../interfaces/return-object';
 import { handleFileErrors } from '../helpers/handle-file-errors';
 
 export class OrganizerService{
 
-    async organize(baseDirPath: string): Promise<ReturnObject>{
+    async organize(baseDirPath: string): Promise<SimpleReturnObject>{
 
         try {
             
@@ -57,7 +57,7 @@ export class OrganizerService{
     
             return {
                 status:200,
-                message:'Files organized successfully'
+                body:'Files organized successfully'
             }
         } catch(err) {
             return handleFileErrors(err);

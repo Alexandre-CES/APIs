@@ -11,6 +11,6 @@ export class OrganizerController {
   public async organize(req: Request, res: Response) {
     const result = await this.organizerService.organize(this.pathService.getDirPath());
 
-    res.status(result.status).send(result.message);
+    res.status(result.status).send(result.body);
   }
 }
