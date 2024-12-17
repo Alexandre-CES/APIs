@@ -12,7 +12,7 @@ const analyzerController = new AnalyzerController(
     new AnalyzerService()
 )
 
-router.use('/getSize',
+router.get('/getSize',
     asyncHandler((req: Request, res:Response) => analyzerController.getSize(req,res))
 );
 

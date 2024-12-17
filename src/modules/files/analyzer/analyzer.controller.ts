@@ -11,7 +11,6 @@ export class AnalyzerController{
 
     public async getSize(req:Request, res:Response){
         const result = await this.analyzerService.getSize(this.pathService.getDirPath());
-
         res.status(result.status).send(result.body)
     }
 }
