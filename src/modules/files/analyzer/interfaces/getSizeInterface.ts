@@ -1,10 +1,10 @@
 
-interface GetSizeInterfaceBody{
+export interface GetSizeInterfaceBody{
     fileName: string;
-    
+    fileSize: string;
 }
 
 export interface GetSizeInterface{
-    code: number;
-    body: GetSizeInterfaceBody;
+    status: number;
+    body: GetSizeInterfaceBody[];
 }
