@@ -1,5 +1,5 @@
 
-export interface GetSizeInterfaceBody{
+interface GetSizeInterfaceBody{
     fileName: string;
     fileSize: string;
 }
