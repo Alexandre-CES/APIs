@@ -15,17 +15,31 @@ export class AnalyzerService{
             //read directory
             const data = await fs.promises.readdir(baseDirPath);
 
+            let sizeInBytes:number = 0;
+
             //catch info of each file
-            const body = await Promise.all(data.map(async (file) =>{
+            const filesSize = await Promise.all(data.map(async (file) =>{
+
                 const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
-                const fileSize = parseSize(stats.size);
+                const statsSize = stats.size
+                
+                const fileSize = parseSize(statsSize);
+                sizeInBytes += statsSize;
 
                 return{
                     fileName: file,
                     fileSize: fileSize
                 };
             }));
+
+            const size = parseSize(sizeInBytes);
+
+            const body = {
+                directory: baseDirPath,
+                size: size,
+                filesSize: filesSize
+            }
 
             return {
                 status: 200,
