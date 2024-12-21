@@ -4,8 +4,12 @@ import fs from 'fs';
 import path from 'path';
 
 import { handleFileErrors } from "../helpers/handle-file-errors";
+import { calcTotalDirectory } from "./helpers/calcTotalDirectory";
 import { parseSize } from "./helpers/parseSize";
 
+/*
+TODO: Return of getSize do not include directories, so i need to do something about it.
+*/
 export class AnalyzerService{
     
     // Get directory's files size 
@@ -18,33 +22,50 @@ export class AnalyzerService{
             let sizeInBytes:number = 0;
 
             //catch info of each file
-            const filesSize = await Promise.all(data.map(async (file) =>{
+            const itemsSize = await Promise.all(data.map(async (item) =>{
 
-                const filePath = path.join(baseDirPath,file);
-                const stats = await fs.promises.stat(filePath);
-                const statsSize = stats.size
-                
-                const fileSize = parseSize(statsSize);
-                sizeInBytes += statsSize;
+                const itemPath = path.join(baseDirPath,item);
+                const stats = await fs.promises.stat(itemPath);
+
+                let itemSize:string;
+                let itemType:'folder' | 'file';
+
+                //if folder, calc his total based on his files and folders
+                if(stats.isDirectory()){
+                    const directorySize = await calcTotalDirectory(itemPath);
+                    sizeInBytes += directorySize;
+                    itemSize = parseSize(directorySize);
+
+                    itemType = 'folder';
+
+                //if file, just get his size
+                }else{
+                    const statsSize = stats.size;
+                    sizeInBytes += statsSize;
+                    itemSize = parseSize(statsSize);
+
+                    itemType = 'file';
+                }
 
                 return{
-                    fileName: file,
-                    fileSize: fileSize
+                    itemName: item,
+                    itemSize: itemSize,
+                    itemType: itemType
                 };
             }));
 
-            const size = parseSize(sizeInBytes);
+            const totalSize = parseSize(sizeInBytes);
 
             const body = {
                 directory: baseDirPath,
-                size: size,
-                filesSize: filesSize
-            }
+                size: totalSize,
+                itemsSize: itemsSize
+            };
 
             return {
                 status: 200,
                 body:body
-            }
+            };
         }catch(err){
             return handleFileErrors(err);
         }
