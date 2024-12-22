@@ -1,15 +1,12 @@
-import { SimpleReturnObject } from "../interfaces/return-object";
-import { GetSizeInterface } from "./interfaces/getSizeInterface";
 import fs from 'fs';
 import path from 'path';
-
+import { SimpleReturnObject } from "../interfaces/return-object";
+import { GetSizeInterface } from "./interfaces/getSizeInterface";
+import { GetDatesInterface } from './interfaces/getDatesInterface';
 import { handleFileErrors } from "../helpers/handle-file-errors";
 import { calcTotalDirectory } from "./helpers/calcTotalDirectory";
 import { parseSize } from "./helpers/parseSize";
 
-/*
-TODO: Return of getSize do not include directories, so i need to do something about it.
-*/
 export class AnalyzerService{
     
     // Get directory's files size 
@@ -66,6 +63,20 @@ export class AnalyzerService{
                 status: 200,
                 body:body
             };
+        }catch(err){
+            return handleFileErrors(err);
+        }
+    }
+
+    /*
+        TODO: getDates: return (creation, modification, access) date from files of directory
+    */
+    async getDates(baseDirPath:string):Promise<GetDatesInterface | SimpleReturnObject>{
+        try{
+
+            return{
+
+            }
         }catch(err){
             return handleFileErrors(err);
         }
