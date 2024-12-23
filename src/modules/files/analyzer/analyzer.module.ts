@@ -16,4 +16,8 @@ router.get('/getSize',
     asyncHandler((req: Request, res:Response) => analyzerController.getSize(req,res))
 );
 
+router.get('/getDates',
+    asyncHandler((req: Request, res:Response) => analyzerController.getDates(req,res))
+);
+
 export {router as analyzerRouter};

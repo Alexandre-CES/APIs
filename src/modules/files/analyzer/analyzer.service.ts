@@ -68,15 +68,33 @@ export class AnalyzerService{
         }
     }
 
-    /*
-        TODO: getDates: return (creation, modification, access) date from files of directory
-    */
+    //Get (creation, modification, access) date from directory's files
     async getDates(baseDirPath:string):Promise<GetDatesInterface | SimpleReturnObject>{
         try{
 
-            return{
+            const data = await fs.promises.readdir(baseDirPath);
 
-            }
+            const itemsDates = await Promise.all(data.map(async(item)=>{
+                const itemPath = path.join(baseDirPath,item);
+                const stats = await fs.promises.stat(itemPath);
+
+                return{
+                    itemName: item,
+                    itemCreationDate: stats.ctime,
+                    itemModificationDate: stats.mtime,
+                    itemAccessDate: stats.atime
+                }
+            }));
+
+            const body = {
+                directory: baseDirPath,
+                itemsDates:itemsDates
+            };
+
+            return{
+                status: 200,
+                body: body
+            };
         }catch(err){
             return handleFileErrors(err);
         }

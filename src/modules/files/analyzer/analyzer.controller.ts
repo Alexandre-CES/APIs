@@ -13,4 +13,9 @@ export class AnalyzerController{
         const result = await this.analyzerService.getSize(this.pathService.getDirPath());
         res.status(result.status).send(result.body);
     }
+
+    public async getDates(req:Request, res:Response){
+        const result = await this.analyzerService.getDates(this.pathService.getDirPath());
+        res.status(result.status).send(result.body);
+    }
 }
