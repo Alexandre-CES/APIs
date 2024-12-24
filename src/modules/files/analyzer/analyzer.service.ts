@@ -77,13 +77,14 @@ export class AnalyzerService{
             const itemsDates = await Promise.all(data.map(async(item)=>{
                 const itemPath = path.join(baseDirPath,item);
                 const stats = await fs.promises.stat(itemPath);
-
+                
                 return{
                     itemName: item,
+                    itemBirthtime: stats.birthtime,
                     itemCreationDate: stats.ctime,
                     itemModificationDate: stats.mtime,
                     itemAccessDate: stats.atime
-                }
+                };
             }));
 
             const body = {
