@@ -11,6 +11,6 @@ export class PathController{
     public setDirPath(req: Request, res:Response){
         const result = this.pathService.setDirPath(req.body.dirPath);
 
-        res.status(result.status).send(result.message);
+        res.status(result.status).send(result.body);
     }
 }
