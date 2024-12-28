@@ -9,7 +9,12 @@ import { parseSize } from "./helpers/parseSize";
 
 export class AnalyzerService{
     
-    // Get directory's files size 
+    /*
+        *Get directory's files size 
+
+        This basically search for every file in the directory, storing the sizes and adding it to the total size.
+        If there is any folder inside the directory, and maybe a folder inside the folder, a recursive function is called to sum every file's size inside of them, until no more folders are left.
+    */
     async getSize(baseDirPath:string): Promise<GetSizeInterface | SimpleReturnObject>{
 
         try{
@@ -68,7 +73,11 @@ export class AnalyzerService{
         }
     }
 
-    //Get (creation, modification, access) date from directory's files
+    /*  
+        *Get (creation, modification, access) date and birthtime from directory's files
+
+        This can help the user to undertand how the dates should be used in other functions
+    */
     async getDates(baseDirPath:string):Promise<GetDatesInterface | SimpleReturnObject>{
         try{
 
