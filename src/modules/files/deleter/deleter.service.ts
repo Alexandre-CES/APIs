@@ -29,8 +29,12 @@ export class DeleterService{
         }
     }
 
-    //Delete all files whose last access date is after the date in the request body
-    async deleteFilesLastAccessedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    //Delete all files whose date is after the date in the request body
+    async deleteFilesAfterDate(
+        baseDirPath:string,
+        date:Date,
+        dateTypeString: string
+    ): Promise<ReturnObject>{
 
         try{
             //read directory
@@ -43,8 +47,21 @@ export class DeleterService{
                 const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
 
-                //delete file if access date is after date
-                if(stats.atime > date){
+                let dateType: Date;
+
+                //set the chosen dateType
+                if(dateTypeString == 'mtime'){
+                    dateType = stats.mtime;
+                }else if(dateTypeString == 'ctime'){
+                    dateType = stats.ctime;
+                }else if(dateTypeString == 'birthTime'){
+                    dateType = stats.birthtime;
+                }else{
+                    dateType = stats.atime;
+                }
+
+                //delete file if dateType is after date
+                if(dateType > date){
                     fs.promises.rm(filePath, {recursive:true});
                 }
             }
@@ -59,8 +76,12 @@ export class DeleterService{
         }
     }
 
-    //Delete all files whose last access date is before the date in the request body
-    async deleteFilesLastAccessedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
+    //Delete all files whose date is before the date in the request body
+    async deleteFilesBeforeDate(
+        baseDirPath:string,
+        date:Date,
+        dateTypeString: string
+    ): Promise<ReturnObject>{
 
         try{
 
@@ -74,129 +95,21 @@ export class DeleterService{
                 const filePath = path.join(baseDirPath,file);
                 const stats = await fs.promises.stat(filePath);
 
-                 //delete file if access date is before date
-                if(stats.atime < date){
-                    fs.promises.rm(filePath, {recursive:true});
+                let dateType: Date;
+
+                //set the chosen dateType
+                if(dateTypeString == 'mtime'){
+                    dateType = stats.mtime;
+                }else if(dateTypeString == 'ctime'){
+                    dateType = stats.ctime;
+                }else if(dateTypeString == 'birthTime'){
+                    dateType = stats.birthtime;
+                }else{
+                    dateType = stats.atime;
                 }
-            }
 
-            return {
-                status: 200,
-                message:'Files deleted successfully'
-            };
-
-        }catch(err){
-            return handleFileErrors(err);
-        }
-    }
-
-    //Delete all files whose creation date is after date of request body 
-    async deleteFilesCreatedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
-        try{
-
-            //read directory
-            const data = await fs.promises.readdir(baseDirPath);
-
-            //iterate each file from directory
-            for(const file of data){
-
-                //catch stats of file
-                const filePath = path.join(baseDirPath,file);
-                const stats = await fs.promises.stat(filePath);
-
-                 //delete file if its creation date is after date 
-                if(stats.ctime > date){
-                    fs.promises.rm(filePath, {recursive:true});
-                }
-            }
-
-            return {
-                status: 200,
-                message:'Files deleted successfully'
-            };
-
-        }catch(err){
-            return handleFileErrors(err);
-        }
-    }
-
-    //Delete all files whose creation date is before date of request body 
-    async deleteFilesCreatedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
-        
-        try{
-            //read directory
-            const data = await fs.promises.readdir(baseDirPath);
-
-            //iterate each file from directory
-            for(const file of data){
-
-                //catch stats of file
-                const filePath = path.join(baseDirPath,file);
-                const stats = await fs.promises.stat(filePath);
-
-                //delete file if its creation date is before date
-                console.log(stats.ctime)
-                if(stats.ctime < date){
-                    fs.promises.rm(filePath, {recursive:true});
-                }
-            }
-
-            return {
-                status: 200,
-                message:'Files deleted successfully'
-            };
-
-        }catch(err){
-            return handleFileErrors(err);
-        }
-    }
-
-    //Delete all files whose motification date is after date of request body 
-    async deleteFilesModifiedAfterDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
-        try{
-
-            //read directory
-            const data = await fs.promises.readdir(baseDirPath);
-
-            //iterate each file from directory
-            for(const file of data){
-
-                //catch stats of file
-                const filePath = path.join(baseDirPath,file);
-                const stats = await fs.promises.stat(filePath);
-
-                 //delete file if its motification date is after date 
-                if(stats.mtime > date){
-                    fs.promises.rm(filePath, {recursive:true});
-                }
-            }
-
-            return {
-                status: 200,
-                message:'Files deleted successfully'
-            };
-
-        }catch(err){
-            return handleFileErrors(err);
-        }
-    }
-
-    //Delete all files whose modification date is before date of request body 
-    async deleteFilesModifiedBeforeDate(baseDirPath:string, date:Date): Promise<ReturnObject>{
-        
-        try{
-            //read directory
-            const data = await fs.promises.readdir(baseDirPath);
-
-            //iterate each file from directory
-            for(const file of data){
-
-                //catch stats of file
-                const filePath = path.join(baseDirPath,file);
-                const stats = await fs.promises.stat(filePath);
-
-                //delete file if its modification date is before date
-                if(stats.mtime < date){
+                 //delete file if dateType is before date
+                if(dateType < date){
                     fs.promises.rm(filePath, {recursive:true});
                 }
             }

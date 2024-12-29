@@ -14,12 +14,13 @@ export class DeleterController{
         res.status(result.status).send(result.message);
     };
 
-    public async deleteFilesLastAccessedAfterDate(req:Request, res:Response){
+    public async deleteFilesAfterDate(req:Request, res:Response){
         const validDate = parseReqBodyDate(req.body.date);
         if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesLastAccessedAfterDate(
+            const result = await this.deleterService.deleteFilesAfterDate(
                 this.pathService.getDirPath(),
-                validDate.date
+                validDate.date,
+                req.body.dateTypeString
             );
             res.status(result.status).send(result.message);
         }else{
@@ -27,68 +28,17 @@ export class DeleterController{
         }
     }
 
-    public async deleteFilesLastAccessedBeforeDate(req:Request, res:Response){
+    public async deleteFilesBeforeDate(req:Request, res:Response){
         const validDate = parseReqBodyDate(req.body.date);
         if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesLastAccessedBeforeDate(
+            const result = await this.deleterService.deleteFilesBeforeDate(
                 this.pathService.getDirPath(),
-                validDate.date
+                validDate.date,
+                req.body.dateTypeString
             );
             res.status(result.status).send(result.message);
         }else{
             res.status(403).send('Invalid date');
-        }
-    }
-
-    public async deleteFilesCreatedAfterDate(req:Request, res:Response){
-        const validDate = parseReqBodyDate(req.body.date);
-        if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesCreatedAfterDate(
-                this.pathService.getDirPath(),
-                validDate.date
-            );
-            res.status(result.status).send(result.message);
-        }else{
-            res.status(403).send('Invalid date'); 
-        }
-    }
-
-    public async deleteFilesCreatedBeforeDate(req:Request, res:Response){
-        const validDate = parseReqBodyDate(req.body.date);
-        if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesCreatedBeforeDate(
-                this.pathService.getDirPath(),
-                validDate.date
-            );
-            res.status(result.status).send(result.message);
-        }else{
-            res.status(403).send('Invalid date'); 
-        }
-    }
-
-    public async deleteFilesModifiedAfterDate(req:Request, res:Response){
-        const validDate = parseReqBodyDate(req.body.date);
-        if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesModifiedAfterDate(
-                this.pathService.getDirPath(),
-                validDate.date
-            );
-            res.status(result.status).send(result.message);
-        }else{
-            res.status(403).send('Invalid date'); 
-        }
-    }
-
-    public async deleteFilesModifiedBeforeDate(req:Request, res:Response){
-        const validDate = parseReqBodyDate(req.body.date);
-        if(validDate.isValid){
-            const result = await this.deleterService.deleteFilesModifiedBeforeDate(
-                this.pathService.getDirPath(),
-                validDate.date
-            );
-            res.status(result.status).send(result.message);
-        }else{
-            res.status(403).send('Invalid date'); 
         }
     }
 
