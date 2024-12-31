@@ -29,7 +29,15 @@ export class DeleterService{
         }
     }
 
-    //Delete all files whose date is after the date in the request body
+    /*
+        *Delete all files whose date is after the date in the request body
+
+        for default, the type of date is access time (atime), but user can give the dateTypeString at req.body, wich can be:
+
+        -mtime = modification time
+        -ctime = creation time
+        -birthtime = birth time
+    */
     async deleteFilesAfterDate(
         baseDirPath:string,
         date:Date,
@@ -76,7 +84,15 @@ export class DeleterService{
         }
     }
 
-    //Delete all files whose date is before the date in the request body
+    /*
+        *Delete all files whose date is before the date in the request body
+
+        for default, the type of date is access time (atime), but user can give the dateTypeString at req.body, wich can be:
+
+        -mtime = modification time
+        -ctime = creation time
+        -birthtime = birth time
+    */
     async deleteFilesBeforeDate(
         baseDirPath:string,
         date:Date,
