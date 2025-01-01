@@ -42,7 +42,7 @@ export class DeleterService{
         baseDirPath:string,
         date:Date,
         dateTypeString: string
-    ): Promise<ReturnObject>{
+    ): Promise<SimpleReturnObject>{
 
         try{
             //read directory
@@ -97,7 +97,7 @@ export class DeleterService{
         baseDirPath:string,
         date:Date,
         dateTypeString: string
-    ): Promise<ReturnObject>{
+    ): Promise<SimpleReturnObject>{
 
         try{
 
