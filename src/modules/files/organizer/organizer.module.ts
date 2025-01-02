@@ -14,6 +14,12 @@ const organizerController = new OrganizerController(
 
 const router = Router();
 
-router.get('/', asyncHandler((req: Request, res: Response) => organizerController.organize(req, res)));
+router.get('/', 
+    asyncHandler((req: Request, res: Response) => organizerController.organize(req, res))
+);
+
+router.post('/byDate',
+    asyncHandler((req:Request, res:Response) => organizerController.organizeByDate(req,res))
+);
 
 export {router as organizerRouter};
