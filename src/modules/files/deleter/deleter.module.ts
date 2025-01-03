@@ -14,29 +14,13 @@ const deleterController = new DeleterController(
 router.get('/all',
     asyncHandler((req:Request,res:Response) => deleterController.deleteAllDirFiles(req,res))
 );
-router.post('/lastAccessedAfterDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesLastAccessedAfterDate(req,res))
+router.post('/afterDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesAfterDate(req,res))
 );
 
-router.post('/lastAccessedBeforeDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesLastAccessedBeforeDate(req,res))
+router.post('/beforeDate',
+    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesBeforeDate(req,res))
 );
-
-router.post('/createdAfterDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesCreatedAfterDate(req,res))
-)
-
-router.post('/createdBeforeDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesCreatedBeforeDate(req,res))
-)
-
-router.post('/modifiedAfterDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesModifiedAfterDate(req,res))
-)
-
-router.post('/modifiedBeforeDate',
-    asyncHandler((req:Request, res:Response) => deleterController.deleteFilesModifiedBeforeDate(req,res))
-)
 
 router.post('/extensions',
     asyncHandler((req:Request,res:Response) => deleterController.deleteDirFilesByExtensions(req,res))
